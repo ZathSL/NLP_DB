@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  #comando specifica l'istanza del config server e parte del replica set.
+  # Inoltre, definisce la porta di default e il path dove si trova memorizzato il database
+  configs1:
+    container_name: configs1
+    image: mongo
+    command: mongod --configsvr --replSet cfgrs --port 27017 --dbpath /data/db
+    ports:
+      - "10001:27017"
+    volumes:
+      - configs1:/data/db
+    networks:
+      - net-mongodb
+
+volumes:
+  configs1: {}
+
+networks:
+  net-mongodb:
+    driver: bridge
